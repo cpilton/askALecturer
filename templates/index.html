@@ -1,10 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE HTML>
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Hello</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <link rel="icon" href="../static/img/logo.ico">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}" type="text/css"/>
+    <title>Ask A Lecturer</title>
 </head>
 <body>
-<h1>Hello</h1>
+<div id="header">Ask A Lecturer
+    <div id="user" class="icon-button"></div>
+</div>
+<div id="ask-container" class="container">
+    <input type="text" required name="question_title" id="question" placeholder="Ask a Question">
+</div>
+<div id="questions-container" class="container">
+</div>
 </body>
 </html>
