@@ -1,12 +1,12 @@
-var express = require('express');
-var app = express();
-var server = require('http').Server(app);
-var io = require('socket.io')(server);
-var session = require('express-session');
-var MemoryStore = require('memorystore')(session);
+const express = require('express');
+const app = express();
+const server = require('http').Server(app);
+const io = require('socket.io')(server);
+const session = require('express-session');
+const MemoryStore = require('memorystore')(session);
 app.set('port', process.env.PORT || 3000);
 server.listen(app.get('port'));
-var bodyParser = require('body-parser');
+const bodyParser = require('body-parser');
 const NaturalLanguageUnderstandingV1 = require('ibm-watson/natural-language-understanding/v1');
 const { IamAuthenticator } = require('ibm-watson/auth');
 
@@ -39,7 +39,7 @@ app.use(
 );
 
 // load local VCAP configuration  and service credentials
-var vcapLocal;
+let vcapLocal;
 try {
   vcapLocal = require('./vcap-local.json');
   console.log("Loaded local VCAP", vcapLocal);
@@ -68,6 +68,25 @@ io.on('connection', function (socket) {
   socket.on('disconnect', function () {
     console.log('a user disconnected');
   });
+});
+
+app.post('/api/analyze', (req, res, next) => {
+    const analyze = req.body;
+    analyze.features = {
+        'keywords': {},
+        "emotion": {}
+    }
+    analyze.language = 'en';
+    nlu.analyze(analyze, (err, results) => {
+        if (err) {
+            return next(err);
+        }
+        return res.json({
+            query: req.body.query,
+            results
+        });
+    });
+
 });
 
 app.use(function (req, res) {

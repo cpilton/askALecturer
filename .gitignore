@@ -95,5 +95,8 @@ typings/
 # VCAP File
 vcap-local.json
 
+# Idea Workspace
+.idea/
+
 
 # End of https://www.gitignore.io/api/node
