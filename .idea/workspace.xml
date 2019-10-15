@@ -1,24 +1,55 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="8efa86f1-7bce-4faf-b917-578589958e5d" name="Default Changelist" comment="" />
+    <list default="true" id="8efa86f1-7bce-4faf-b917-578589958e5d" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.gcloudignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gcloudignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitattributes" beforeDir="false" afterPath="$PROJECT_DIR$/.gitattributes" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/askALecturer.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/css/styles.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/fonts/Quicksand-Bold.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/fonts/Quicksand-Regular.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/fonts/Rubik-Bold.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/fonts/Rubik-Regular.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/img/hover/user.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/img/user.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/index.html" beforeDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JavaScript File" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectId" id="1RvQy1k4P3U1WXIMdPa3gfR7ltX" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+    <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="vcs.Git" />
   </component>
   <component name="RecentsManager">
@@ -72,7 +103,11 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1570545340865</updated>
-      <workItem from="1570545342074" duration="8499000" />
+      <workItem from="1570545342074" duration="9047000" />
+      <workItem from="1571074576523" duration="822000" />
+      <workItem from="1571075469063" duration="22000" />
+      <workItem from="1571075520716" duration="32000" />
+      <workItem from="1571147656534" duration="5834000" />
     </task>
     <servers />
   </component>
@@ -84,7 +119,9 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
           </value>
         </entry>
       </map>

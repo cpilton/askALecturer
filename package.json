@@ -1,0 +1,28 @@
+{
+  "name": "askalecturer",
+  "version": "1.0.0",
+  "description": "Ask A Lecturer App",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shortbread31/askALecturer.git"
+  },
+  "author": "Callum Pilton",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/shortbread31/askALecturer/issues"
+  },
+  "homepage": "https://github.com/shortbread31/askALecturer#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "express-session": "^1.17.0",
+    "ibm-watson": "^5.1.0",
+    "memorystore": "^1.6.1",
+    "socket.io": "^2.3.0"
+  }
+}
