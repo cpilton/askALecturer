@@ -13,8 +13,29 @@
 <div id="ask-container" class="container">
     <input type="text" required name="question_title" id="question" placeholder="Ask a Question" oninput="questionInput()">
     <div id="emotion-container">
+        <div id="emotion-top">
     <div id="emotion"></div>
-        Ask a question in the text field above!
+        <div id="emotion-text">
+        Emotion indicators will appear as you type
+    </div>
+    </div>
+        <div id="emotion-bottom">
+            <div class="emotion-holder"><div class="emotion-face" id="sadness-face"></div><div class="emotion-bar-outer"><div class="emotion-bar-inner" id="sadness-inner"></div></div></div>
+            <div class="emotion-holder"><div class="emotion-face" id="joy-face"></div><div class="emotion-bar-outer"><div class="emotion-bar-inner" id="joy-inner"></div></div></div>
+            <div class="emotion-holder"><div class="emotion-face" id="fear-face"></div><div class="emotion-bar-outer"><div class="emotion-bar-inner" id="fear-inner"></div></div></div>
+            <div class="emotion-holder"><div class="emotion-face" id="disgust-face"></div><div class="emotion-bar-outer"><div class="emotion-bar-inner" id="disgust-inner"></div></div></div>
+            <div class="emotion-holder"><div class="emotion-face" id="anger-face"></div><div class="emotion-bar-outer"><div class="emotion-bar-inner" id="anger-inner"></div></div></div>
+        </div>
+    </div>
+    <div id="keyword-container">
+        <div id="keyword-top">
+            <div id="keyword-text">
+                Keywords will appear here
+            </div>
+        </div>
+        <div id="keyword-bottom">
+
+        </div>
     </div>
 </div>
 </div>

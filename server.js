@@ -9,25 +9,19 @@ server.listen(app.get('port'));
 const bodyParser = require('body-parser');
 const NaturalLanguageUnderstandingV1 = require('ibm-watson/natural-language-understanding/v1');
 const { IamAuthenticator } = require('ibm-watson/auth');
+const Firestore = require('@google-cloud/firestore');
 
+//Set up express
 app.use(express.static(__dirname + '/public'));
 
-app.use(bodyParser.urlencoded({
-  limit: '20mb',
-  extended: true
-}))
-app.use(bodyParser.json({
-  limit: '20mb',
-  extended: true
-}))
-
+//Set up a sticky session to ensure real-time messages work over multiple instances
 app.use(bodyParser.json());
 app.use(
   session({
     store: new MemoryStore({
       checkPeriod: 86400000 // prune expired entries every 24h
     }),
-    key: 'JSESSIONID', // use a sticky session to make sockets work
+    key: 'JSESSIONID',
     secret: 'callumpilton',
     cookie: {
       maxAge: 24 * 60 * 60 * 1000, // 1 day
@@ -38,26 +32,33 @@ app.use(
   })
 );
 
-// load local VCAP configuration  and service credentials
-let vcapLocal;
+// load  local authentication configuration and service credentials
+let localAuth;
 try {
-  vcapLocal = require('./vcap-local.json');
-  console.log("Loaded local VCAP", vcapLocal);
+    localAuth = require('./auth-local.json');
+  console.log("App started");
+  console.log("Loaded local Authentication");
 } catch (e) {}
 
+//Connect to the Natural Language API
 const nlu = new NaturalLanguageUnderstandingV1({
   version: '2019-07-12',
   authenticator: new IamAuthenticator({
-    apikey: vcapLocal.services.nlu.apikey,
+    apikey: localAuth.services.nlu.apikey,
   }),
-  url: vcapLocal.services.nlu.url,
+  url: localAuth.services.nlu.url,
+});
+
+//connect to the Firestore API
+const db = new Firestore({
+    projectId: 'ask-a-lecturer',
+    keyFilename: './gae-local.json',
 });
 
 //The following pages are not authenticated
 
 app.get('/', function (req, res) {
   req.session.originalUrl = '/';
-  //res.sendFile(__dirname + '/views/launch.html');
   res.sendFile(__dirname + '/public/index.html');
 });
 
@@ -70,12 +71,13 @@ io.on('connection', function (socket) {
   });
 });
 
+//Send string to NLU for analysis
 app.post('/api/analyze', (req, res, next) => {
     const analyze = req.body;
     analyze.features = {
         'keywords': {},
         "emotion": {}
-    }
+    };
     analyze.language = 'en';
     nlu.analyze(analyze, (err, results) => {
         if (err) {
@@ -86,21 +88,28 @@ app.post('/api/analyze', (req, res, next) => {
             results
         });
     });
-
 });
 
+//Show error page on 403
 app.use(function (req, res) {
   res.status(403);
-  // respond with html page
   if (req.accepts('html')) {
     res.sendFile(__dirname + '/public/err/403.html');
   }
 });
 
+//Show error page on 500
 app.use(function (req, res) {
   res.status(500);
-  // respond with html page
   if (req.accepts('html')) {
     res.sendFile(__dirname + '/public/err/500.html');
   }
+});
+
+//Show error page on 404
+app.use(function (req, res) {
+    res.status(500);
+    if (req.accepts('html')) {
+        res.sendFile(__dirname + '/public/err/404.html');
+    }
 });

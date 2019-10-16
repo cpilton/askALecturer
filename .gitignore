@@ -93,7 +93,7 @@ typings/
 .dynamodb/
 
 # VCAP File
-vcap-local.json
+auth-local.json
 
 # Idea Workspace
 .idea/
