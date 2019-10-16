@@ -23,9 +23,41 @@ function callNlu() {
 function nluCallback(nluResponse) {
     console.log(nluResponse);
     const emotion = nluResponse.results.result.emotion.document.emotion;
-    console.log(emotion);
+    const keywords = nluResponse.results.result.keywords;
+
     var highestValue = getHighestValue(emotion);
-    $('#emotion').css('background-image',' url("/img/emotion/'+highestValue[0]+'.svg")');
+
+    if (highestValue[0] == undefined) {
+        resetEmotion();
+        return;
+    }
+    $('#emotion').css('background-image', ' url("/img/emotion/' + highestValue[0] + '.svg")');
+    $('#emotion-text').text('Your question has lots of ' + highestValue[0]);
+
+    setEmotions(emotion);
+    addKeywords(keywords);
+}
+
+function addKeywords(obj) {
+    var keywords = [];
+    $(obj).each(function () {
+        const keyword = '<div class="keyword" name="' + this.text + '">' + this.text + '</div>';
+        console.log($('[name="' + this.text + '"'))
+        if ($('[name="' + this.text + '"').length == 0) {
+            $('#keyword-bottom').append(keyword);
+            $('[name="' + this.text + '"').css('opacity', '1');
+        }
+        keywords.push(this.text);
+    });
+    $('.keyword').each(function () {
+        if (keywords.indexOf($(this).attr('name')) === -1) {
+            $(this).remove();
+        }
+    });
+}
+
+function resetEmotion() {
+    $('#emotion-text').text('Ask a question in the text field above!');
 }
 
 function getHighestValue(obj) {
@@ -38,7 +70,15 @@ function getHighestValue(obj) {
             }
         }
     }
-    return [item,max];
+    return [item, max];
+}
+
+function setEmotions(obj) {
+    for (var key in obj) {
+        if (obj.hasOwnProperty(key)) {
+            $('#' + key + '-inner').css('width', (obj[key] * 100) + '%');
+        }
+    }
 }
 
 //Requests a response from the Watson Natural language API based on text given
