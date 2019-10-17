@@ -1,8 +1,10 @@
 <!DOCTYPE HTML>
 <html>
-<head>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="script/index.js"></script>
+    <meta name="google-signin-scope" content="profile email">
+    <meta name="google-signin-client_id" content="112598048766-mm93uk5ukmjdcvae6dnit6qfq1qc4gj6.apps.googleusercontent.com">
+<script src="https://apis.google.com/js/platform.js" async defer></script>
     <link rel="stylesheet" href="css/styles.css" type="text/css"/>
     <title>Ask A Lecturer</title>
 </head>
@@ -12,7 +14,7 @@
 </div>
 <div id="ask-container" class="container">
     <input type="text" required name="question_title" id="question" placeholder="Ask a Question" oninput="questionInput()">
-    <div id="emotion-container">
+    <div id="emotion-container" class="question-module">
         <div id="emotion-top">
     <div id="emotion"></div>
         <div id="emotion-text">
@@ -27,10 +29,10 @@
             <div class="emotion-holder"><div class="emotion-face" id="anger-face"></div><div class="emotion-bar-outer"><div class="emotion-bar-inner" id="anger-inner"></div></div></div>
         </div>
     </div>
-    <div id="keyword-container">
+    <div id="keyword-container" class="question-module">
         <div id="keyword-top">
             <div id="keyword-text">
-                Keywords will appear here
+                Keywords
             </div>
         </div>
         <div id="keyword-bottom">
@@ -38,6 +40,7 @@
         </div>
     </div>
 </div>
+<div class="g-signin2" data-onsuccess="onSignIn"></div>
 </div>
 <div id="questions-container" class="container">
 </div>
