@@ -8,15 +8,21 @@
 	--color-4: #BBDEFB;
 	--color-5: #64B5F6;
 }
+
 @font-face {
 font-family: 'Quicksand';
   src: url("/font/Quicksand-Regular.ttf");
 }
 
-
 @font-face {
 	font-family: 'Rubik';
 	src: url("/font/Rubik-Regular.ttf");
+}
+
+@keyframes popout {
+	from{transform:scale(0)}
+	90%{transform:scale(1.025)}
+	to{transform:scale(1)}
 }
 
 body, html {
@@ -63,6 +69,8 @@ body, html {
 	padding: 20px;
 	height: calc(75px - 40px);
 	transition: .3s;
+	overflow: hidden;
+	text-align: center;
 }
 #question {
 	width: 450px;
@@ -72,12 +80,12 @@ body, html {
 	box-shadow: 0 1px 2px rgba(0,0,0,0.1);
 	display: block;
 	outline: none;
-	margin: auto;
+	margin: 0 auto 20px;
 }
 #question:hover {
 	outline: none;
 }
-#emotion-container, #keyword-container {
+.question-module {
 	width: 325px;
 	height: auto;
 	border-radius: 15px;
@@ -90,6 +98,14 @@ body, html {
 	overflow: hidden;
 	display: inline-block;
 	vertical-align: top;
+	transform: scale(0);
+	transition: .4s;
+	margin: auto 20px 20px;
+	animation-fill-mode: forwards;
+}
+#keyword-container {
+	width: 645px;
+
 }
 #emotion {
 	width: 30px;
@@ -104,7 +120,7 @@ body, html {
 	background-repeat: no-repeat;
 	background-position: center;
 }
-#emotion-top, #keyword-top {
+#emotion-top {
 	width: calc(100% - 40px);
 	height: 30px;
 	background-color: var(--color-white);
@@ -113,14 +129,28 @@ body, html {
 	border-radius: 15px;
 }
 #keyword-top {
-	width: calc(100% - 10px);
+	width: 100px;
 	padding-left:10px;
+	background-color: var(--color-white);
+	box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+	border-radius: 15px;
+	display: inline-block;
+	vertical-align: top;
 }
-#emotion-bottom, #keyword-bottom {
+#emotion-bottom {
 	width: 100%;
 	height: auto;
 	margin-top:15px;
 	transition: .3s;
+}
+
+#keyword-bottom {
+	width: calc(100% - 114.5px);
+	transition: .3s;
+	display: inline-block;
+	height: 30px;
+	vertical-align: top;
+	text-align: left;
 }
 .emotion-holder {
 	width: calc(100% - 15px);
@@ -174,15 +204,19 @@ body, html {
 	background-image: url("/img/emotion/anger.svg");
 }
 .keyword {
-	margin: 10px;
 	background-color: var(--color-2);
-	display: block;
+	display: inline-block;
 	color: var(--color-black);
 	border-radius: 25px;
-	padding: 2.5px 10px;
-	font-size: 13px;
+	padding: 0px 10px;
+	font-size: 12px;
 	box-shadow: 0 1px 2px rgba(0,0,0,0.1);
 	text-align: center;
 	opacity: 0;
 	transition: .3s;
+	width: fit-content;
+	height: 20px;
+	line-height: 20px;
+	margin: 5px 7.5px;
+	vertical-align: top;
 }
