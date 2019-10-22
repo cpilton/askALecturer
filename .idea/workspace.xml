@@ -2,8 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8efa86f1-7bce-4faf-b917-578589958e5d" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.gcloudignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gcloudignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cron.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/app.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
@@ -33,6 +32,7 @@
     <ConfirmationsSetting value="2" id="Add" />
   </component>
   <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/public/img" />
@@ -94,7 +94,8 @@
       <workItem from="1571257732687" duration="5201000" />
       <workItem from="1571305088874" duration="12148000" />
       <workItem from="1571412977382" duration="71000" />
-      <workItem from="1571753009309" duration="3193000" />
+      <workItem from="1571753009309" duration="9562000" />
+      <workItem from="1571774434527" duration="5869000" />
     </task>
     <servers />
   </component>

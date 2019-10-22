@@ -1,11 +1,13 @@
 <!DOCTYPE HTML>
 <html>
+<script src="/socket.io/socket.io.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="script/index.js"></script>
     <meta name="google-signin-scope" content="profile email">
     <meta name="google-signin-client_id" content="112598048766-mm93uk5ukmjdcvae6dnit6qfq1qc4gj6.apps.googleusercontent.com">
 <script src="https://apis.google.com/js/platform.js" async defer></script>
     <link rel="stylesheet" href="css/styles.css" type="text/css"/>
+    <link rel="shortcut icon" href="img/icon.ico">
     <title>Ask A Lecturer</title>
 </head>
 <body>
@@ -41,10 +43,13 @@
     </div>
     <div id="sign-in-warning">You need to sign in to post your question</div>
     <div class="g-signin2" data-onsuccess="onSignIn"></div>
+    <div id="postQuestion" onclick="postQuestion()">Post<div id="send-img"></div></div>
 </div>
 
 </div>
 <div id="questions-container" class="container">
+
 </div>
+<div id="users-online"></div>
 </body>
 </html>
