@@ -10,6 +10,8 @@ const bodyParser = require('body-parser');
 const NaturalLanguageUnderstandingV1 = require('ibm-watson/natural-language-understanding/v1');
 const { IamAuthenticator } = require('ibm-watson/auth');
 const Firestore = require('@google-cloud/firestore');
+const {OAuth2Client} = require('google-auth-library');
+const client = new OAuth2Client('112598048766-mm93uk5ukmjdcvae6dnit6qfq1qc4gj6.apps.googleusercontent.com');
 
 //Set up express
 app.use(express.static(__dirname + '/public'));
@@ -55,11 +57,59 @@ const db = new Firestore({
     keyFilename: './gae-local.json',
 });
 
-//The following pages are not authenticated
+//Web Pages
 
 app.get('/', function (req, res) {
   req.session.originalUrl = '/';
   res.sendFile(__dirname + '/public/index.html');
+});
+
+//User Functions
+app.post("/user/verify", function (request, response) {
+    var token = request.body;
+
+    async function verify() {
+        const ticket = await client.verifyIdToken({
+            idToken: token,
+            audience: '112598048766-mm93uk5ukmjdcvae6dnit6qfq1qc4gj6.apps.googleusercontent.com',  // Specify the CLIENT_ID of the app that accesses the backend
+            // Or, if multiple clients access the backend:
+            //[CLIENT_ID_1, CLIENT_ID_2, CLIENT_ID_3]
+        });
+        const payload = ticket.getPayload();
+        const userid = payload['sub'];
+        // If request specified a G Suite domain:
+        //const domain = payload['hd'];
+    }
+    verify().catch(console.error);
+});
+
+
+//DB Functions
+
+app.post("/db/addQuestion", function (request, response) {
+    var data = request.body;
+    data.createdAt = new Date().getTime();
+
+    let docRef = db.collection('questions').doc();
+    docRef.set(data);
+
+    response.sendStatus(200);
+});
+
+app.get("/db/getQuestions", function (request, response) {
+    var docs = [];
+    let docRef = db.collection('questions');
+    docRef.get().then(snapshot => {
+        snapshot.forEach(doc => {
+            var data = doc.data();
+            data.id = doc.id
+            docs.push(data);
+        });
+       response.send(docs);
+    })
+        .catch(err => {
+            console.log('Error getting documents', err);
+        });
 });
 
 // Connection function

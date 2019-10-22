@@ -1,7 +1,9 @@
-var typingTimer;
-var doneTypingInterval = 1000;
+var typingTimer, doneTypingInterval = 1000;
+var keywords, emotion;
+var profile;
 
 $(document).ready(function () {
+    getQuestions();
     $('#question').focus(function () {
         showQuestionModules();
     });
@@ -26,8 +28,8 @@ function callNlu() {
 
 function nluCallback(nluResponse) {
     console.log(nluResponse);
-    const emotion = nluResponse.results.result.emotion.document.emotion;
-    const keywords = nluResponse.results.result.keywords;
+    emotion = nluResponse.results.result.emotion.document.emotion;
+    keywords = nluResponse.results.result.keywords;
 
     var highestValue = getHighestValue(emotion);
 
@@ -112,15 +114,16 @@ function analyzeText(text) {
 }
 
 function showQuestionModules() {
-    $('#ask-container').css('height', '390px');
-    setTimeout(function() {
+    $('#ask-container').css('height', '460px');
+    setTimeout(function () {
         $('.question-module').css('animation', 'popout .6s ease forwards');
-    },250);
+    }, 250);
 }
 
 function onSignIn(googleUser) {
+
     // Useful data for your client-side scripts:
-    var profile = googleUser.getBasicProfile();
+    profile = googleUser.getBasicProfile();
     console.log("ID: " + profile.getId()); // Don't send this directly to your server!
     console.log('Full Name: ' + profile.getName());
     console.log('Given Name: ' + profile.getGivenName());
@@ -128,7 +131,74 @@ function onSignIn(googleUser) {
     console.log("Image URL: " + profile.getImageUrl());
     console.log("Email: " + profile.getEmail());
 
+    setUserImage(profile.getImageUrl());
+
     // The ID token you need to pass to your backend:
     var id_token = googleUser.getAuthResponse().id_token;
     console.log("ID Token: " + id_token);
+    sendTokenToServer(id_token)
+}
+
+function sendTokenToServer(id_token) {
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', '/user/verify');
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    xhr.onload = function() {
+        console.log('Signed in as: ' + xhr.responseText);
+    };
+    xhr.send('idtoken=' + id_token);
+}
+
+function setUserImage(link) {
+    $('#user').css('background-image', 'url("' + link + '")')
+}
+
+function postQuestion() {
+    var data = {
+        question: $('#question').val(),
+        keywords: keywords,
+        emotion: emotion,
+        poster: profile
+    }
+    $.ajax({
+        method: "POST",
+        url: "./db/addQuestion",
+        contentType: "application/json",
+        data: JSON.stringify(data)
+    })
+        .done(function (data) {
+            console.log(data);
+        });
+}
+
+function getQuestions() {
+    $.ajax({
+        url: './db/getQuestions',
+        type: 'GET',
+        contentType: 'application/json',
+        success: function (questions) {
+            addQuestionsToHTML(questions);
+        }
+});
+}
+
+function addQuestionsToHTML(questions) {
+    var div = '';
+
+    $(questions).each(function() {
+        div += '<div class="question" id="'+this.id+'">';
+        div += '<div class="question-top">'+this.question;
+        div += '</div>';
+        div += '<div class="question-bottom">';
+        div += '<div class="question-time">'+new Date(this.createdAt).toLocaleString();
+        div += '</div>';
+        div += '<div class="question-asker">Asked By ' + this.poster.ofa;
+        div += '<div class="question-asker-image" style="background-image: url(\''+this.poster.Paa+'\')">';
+        div += '</div>';
+        div += '</div>';
+        div += '</div>';
+        div += '</div>';
+    });
+
+    $('#questions-container').html(div);
 }
