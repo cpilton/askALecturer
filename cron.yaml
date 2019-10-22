@@ -1,0 +1,4 @@
+cron:
+  - description: "Online Users"
+    url: /tasks/countUsers
+    schedule: every 10 mins

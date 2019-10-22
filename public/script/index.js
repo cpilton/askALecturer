@@ -2,8 +2,11 @@ var typingTimer, doneTypingInterval = 1000;
 var keywords, emotion;
 var profile;
 
+var socket = io();
+
 $(document).ready(function () {
     getQuestions();
+    getUserCount();
     $('#question').focus(function () {
         showQuestionModules();
     });
@@ -27,7 +30,6 @@ function callNlu() {
 }
 
 function nluCallback(nluResponse) {
-    console.log(nluResponse);
     emotion = nluResponse.results.result.emotion.document.emotion;
     keywords = nluResponse.results.result.keywords;
 
@@ -52,7 +54,6 @@ function addKeywords(obj) {
         if ($('[name="' + this.text + '"').length === 0) {
             if ($('#keyword-bottom').text().length > 0 && $('#keyword-bottom').find('.keyword').length === 0) {
                 $('#keyword-bottom').text('');
-                console.log('hi')
             }
             $('#keyword-bottom').append(keyword);
             $('[name="' + this.text + '"').css('opacity', '1');
@@ -121,36 +122,23 @@ function showQuestionModules() {
 }
 
 function onSignIn(googleUser) {
-
-    // Useful data for your client-side scripts:
     profile = googleUser.getBasicProfile();
-    console.log("ID: " + profile.getId()); // Don't send this directly to your server!
-    console.log('Full Name: ' + profile.getName());
-    console.log('Given Name: ' + profile.getGivenName());
-    console.log('Family Name: ' + profile.getFamilyName());
-    console.log("Image URL: " + profile.getImageUrl());
-    console.log("Email: " + profile.getEmail());
-
     setUserImage(profile.getImageUrl());
 
-    // The ID token you need to pass to your backend:
-    var id_token = googleUser.getAuthResponse().id_token;
-    console.log("ID Token: " + id_token);
-    sendTokenToServer(id_token)
-}
-
-function sendTokenToServer(id_token) {
-    var xhr = new XMLHttpRequest();
-    xhr.open('POST', '/user/verify');
-    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-    xhr.onload = function() {
-        console.log('Signed in as: ' + xhr.responseText);
-    };
-    xhr.send('idtoken=' + id_token);
+    // The ID token you need to pass to your backend
+   googleUser.getAuthResponse().id_token;
+   
+   removeSignIn();
 }
 
 function setUserImage(link) {
     $('#user').css('background-image', 'url("' + link + '")')
+}
+
+function removeSignIn() {
+    $('#sign-in-warning').hide();
+    $('.g-signin2').hide();
+    $('#postQuestion').show();
 }
 
 function postQuestion() {
@@ -186,7 +174,7 @@ function addQuestionsToHTML(questions) {
     var div = '';
 
     $(questions).each(function() {
-        div += '<div class="question" id="'+this.id+'">';
+        div += '<div class="question">';
         div += '<div class="question-top">'+this.question;
         div += '</div>';
         div += '<div class="question-bottom">';
@@ -200,5 +188,24 @@ function addQuestionsToHTML(questions) {
         div += '</div>';
     });
 
-    $('#questions-container').html(div);
+    $('#questions-container').append(div);
 }
+
+function getUserCount() {
+    $.ajax({
+        url: './tasks/countUsers',
+        type: 'GET',
+        contentType: 'application/json',
+        success: function (msg) {
+            $('#users-online').text(msg.users + ' users online');
+        }
+    });
+}
+
+socket.on('userCount', function (msg) {
+    $('#users-online').text(msg + ' User(s) Online');
+});
+
+socket.on('newQuestion', function (msg) {
+   addQuestionsToHTML(msg);
+});
