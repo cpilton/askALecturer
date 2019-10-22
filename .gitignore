@@ -92,11 +92,11 @@ typings/
 # DynamoDB Local files
 .dynamodb/
 
-# VCAP File
-auth-local.json
-
 # Idea Workspace
 .idea/
 
+# VCAP Files
+auth-local.json
+gae-local.json
 
 # End of https://www.gitignore.io/api/node
