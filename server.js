@@ -109,6 +109,7 @@ app.post("/user/verify", function (request, response) {
     });
 });
 
+// Verify User
 async function verify() {
     const ticket = await client.verifyIdToken({
         idToken: token,
@@ -148,7 +149,7 @@ app.get("/db/getQuestions", function (request, response) {
         });
 });
 
-// Connection function
+// Socket Connection function
 var users = 0;
 io.on('connection', function (socket) {
   users++;
@@ -177,28 +178,4 @@ app.post('/api/analyze', (req, res, next) => {
             results
         });
     });
-});
-
-//Show error page on 403
-app.use(function (req, res) {
-  res.status(403);
-  if (req.accepts('html')) {
-    res.sendFile(__dirname + '/public/err/403.html');
-  }
-});
-
-//Show error page on 500
-app.use(function (req, res) {
-  res.status(500);
-  if (req.accepts('html')) {
-    res.sendFile(__dirname + '/public/err/500.html');
-  }
-});
-
-//Show error page on 404
-app.use(function (req, res) {
-    res.status(500);
-    if (req.accepts('html')) {
-        res.sendFile(__dirname + '/public/err/404.html');
-    }
 });
