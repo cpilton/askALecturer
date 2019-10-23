@@ -18,13 +18,14 @@
   },
   "homepage": "https://github.com/shortbread31/askALecturer#readme",
   "dependencies": {
-    "@google-cloud/firestore": "^2.4.0",
-    "@google-cloud/storage": "^3.5.0",
+    "@google-cloud/firestore": "^2.5.0",
+    "@google-cloud/storage": "^4.0.0",
     "body-parser": "^1.19.0",
     "express": "^4.17.1",
     "express-session": "^1.17.0",
     "ibm-watson": "^5.1.0",
     "memorystore": "^1.6.1",
+    "serve-favicon": "^2.5.0",
     "socket.io": "^2.3.0"
   }
 }

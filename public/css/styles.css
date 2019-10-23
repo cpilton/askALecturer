@@ -44,27 +44,41 @@ body, html {
 	position: relative;
 }
 .icon-button {
-	width: 50px;
-	height: 50px;
-	background-position: center;
-	background-repeat: no-repeat;
-	background-size: 75%;
+	position: absolute;
+	width: 120px;
+	height: 40px;
 	cursor: pointer;
-	transition: .3s;
+	top:5px;
+	right:5px;
 }
 #user {
 	position: absolute;
-	background-image: url("/img/user.svg");
 	border-radius: 50px;
-	background-size: 100%;
 	width: 40px;
 	height: 40px;
 	top: 5px;
 	right: 5px;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: 100%;
 }
-#user:hover {
-	background-image: url("/img/hover/user.svg");
+#sign-out {
+	position: absolute;
+	width: fit-content;
+	height: 40px;
+	top: 5px;
+	right: 50px;
+	font-size: 13px;
+	line-height: 40px;
+	display: none;
+	cursor: pointer;
+	color: var(--color-black);
+	transition: .3s;
 }
+#sign-out:hover {
+	color: var(--color-grey);
+}
+
 #ask-container {
 	width: calc(100% - 40px);
 	background-color: var(--color-1);
@@ -303,20 +317,30 @@ display: block;
 	display: none;
 	position: relative;
 	color: var(--color-grey);
+	outline: none;
+	border: none;
+	background-image: url("/img/send.svg");
+	background-size: 14px 14px;
+	background-repeat: no-repeat;
+	background-position: 85% 50%;
 }
 
 #postQuestion:hover {
 	box-shadow: 0 3px 6px rgba(0,0,0,0.1);
 }
 
-#send-img {
-	background-image: url("/img/send.svg");
-	background-size: 100%;
-	background-repeat: no-repeat;
-	background-position: center;
-	width: 14px;
-	height: 14px;
+#postQuestion:disabled {
+	background-color: #fdfdfd;
+}
+#postQuestion:disabled:hover {
+	box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+}
+
+
+.question-emotion {
+	width: 12px;
+	height: 12px;
 	position: absolute;
-	top:11px;
-	right:12px;
+	bottom: -2px;
+	left:-2px;
 }

@@ -7,12 +7,15 @@
     <meta name="google-signin-client_id" content="112598048766-mm93uk5ukmjdcvae6dnit6qfq1qc4gj6.apps.googleusercontent.com">
 <script src="https://apis.google.com/js/platform.js" async defer></script>
     <link rel="stylesheet" href="css/styles.css" type="text/css"/>
-    <link rel="shortcut icon" href="img/icon.ico">
+    <link rel="shortcut icon" href="img/logo.ico">
     <title>Ask A Lecturer</title>
 </head>
 <body>
 <div id="header">Ask A Lecturer
-    <div id="user" class="icon-button"></div>
+
+    <div class="icon-button g-signin2" data-onsuccess="onSignIn"></div>
+    <div id="user"></div>
+    <div id="sign-out" onclick="signOut()">Sign Out</div>
 </div>
 <div id="ask-container" class="container">
     <input type="text" required name="question_title" id="question" placeholder="Ask a Question" oninput="questionInput()">
@@ -43,7 +46,7 @@
     </div>
     <div id="sign-in-warning">You need to sign in to post your question</div>
     <div class="g-signin2" data-onsuccess="onSignIn"></div>
-    <div id="postQuestion" onclick="postQuestion()">Post<div id="send-img"></div></div>
+    <input type="submit" id="postQuestion" onclick="postQuestion()" value="Post"><div id="send-img"></div></input>
 </div>
 
 </div>
