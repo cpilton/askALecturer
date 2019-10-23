@@ -7,6 +7,7 @@ var socket = io();
 $(document).ready(function () {
     getQuestions();
     getUserCount();
+    disablePost();
     $('#question').focus(function () {
         showQuestionModules();
     });
@@ -16,6 +17,7 @@ $(document).ready(function () {
 function questionInput() {
     clearTimeout(typingTimer);
     typingTimer = setTimeout(callNlu, doneTypingInterval);
+    disablePost();
 }
 
 //Call the Natural Language Understanding Ajax Function
@@ -45,6 +47,8 @@ function nluCallback(nluResponse) {
 
     setEmotions(emotion);
     addKeywords(keywords);
+
+    enablePost();
 }
 
 function addKeywords(obj) {
@@ -139,24 +143,39 @@ function removeSignIn() {
     $('#sign-in-warning').hide();
     $('.g-signin2').hide();
     $('#postQuestion').show();
+    $('#user').show();
+    $('#sign-out').show();
+}
+
+function showSignIn() {
+    $('#sign-in-warning').show();
+    $('.g-signin2').show();
+    $('#postQuestion').hide();
+    $('#sign-out').hide();
+    $('#user').hide();
+}
+
+function signOut() {
+    var auth2 = gapi.auth2.getAuthInstance();
+    auth2.signOut().then(function () {
+        showSignIn();
+    });
 }
 
 function postQuestion() {
-    var data = {
+    const data = {
         question: $('#question').val(),
         keywords: keywords,
         emotion: emotion,
         poster: profile
-    }
+    };
     $.ajax({
         method: "POST",
         url: "./db/addQuestion",
         contentType: "application/json",
         data: JSON.stringify(data)
-    })
-        .done(function (data) {
-            console.log(data);
-        });
+    });
+    resetPage();
 }
 
 function getQuestions() {
@@ -173,7 +192,11 @@ function getQuestions() {
 function addQuestionsToHTML(questions) {
     var div = '';
 
+
+
     $(questions).each(function() {
+        var highestValue = getHighestValue(this.emotion);
+
         div += '<div class="question">';
         div += '<div class="question-top">'+this.question;
         div += '</div>';
@@ -182,6 +205,8 @@ function addQuestionsToHTML(questions) {
         div += '</div>';
         div += '<div class="question-asker">Asked By ' + this.poster.ofa;
         div += '<div class="question-asker-image" style="background-image: url(\''+this.poster.Paa+'\')">';
+        div += '<div class="question-emotion" style="background-image: url(img/emotion/'+highestValue[0]+'.svg)">'
+        div += '</div>';
         div += '</div>';
         div += '</div>';
         div += '</div>';
@@ -189,6 +214,15 @@ function addQuestionsToHTML(questions) {
     });
 
     $('#questions-container').append(div);
+}
+
+function resetPage() {
+    resetEmotion();
+    resetKeyword();
+    disablePost();
+
+    $('#question').val('');
+    $('#ask-container').css('height','75px');
 }
 
 function getUserCount() {
@@ -209,3 +243,11 @@ socket.on('userCount', function (msg) {
 socket.on('newQuestion', function (msg) {
    addQuestionsToHTML(msg);
 });
+
+function enablePost() {
+    $('#postQuestion').prop("disabled", false);
+}
+
+function disablePost() {
+    $('#postQuestion').prop("disabled", true);
+}
